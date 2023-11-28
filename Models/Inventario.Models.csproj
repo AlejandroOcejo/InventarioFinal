@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Inventario.Data.csproj" />
+
   </ItemGroup>
 
   <PropertyGroup>

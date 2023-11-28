@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Service\Inventario.Service.csproj" />
+        <ProjectReference Include="..\Models\Inventario.Models.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
