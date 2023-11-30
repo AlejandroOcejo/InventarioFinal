@@ -52,14 +52,16 @@ public Product(string p_Name, decimal p_Price, string p_Type, int p_Quantity, Li
     Name = p_Name;
     Price = p_Price;
     Type = p_Type;
+     Quantity = p_Quantity; 
+    ListMovs = p_listMovs ?? new List<Movement>(); 
     addProd("Primera entrada",p_Quantity,DateTime.Now);
-    ListMovs = p_listMovs;
 }
 public string ToString(){
     var toString = $"El producto {Name} de Type {Type} con Price {Price} que hay {Quantity}";
     return toString;
 }
-public void getHistory(){
-    
+public string getHistory(){
+    var sample= "sample"; 
+    return sample;
 }
 }
