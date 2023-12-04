@@ -13,6 +13,14 @@ public static class Menu
 
     private static IProductService productService;
 
+    private static string productName;
+    private static string productType;
+
+    private static string productPrice;
+
+    private static string ProductQuantity;
+
+
     public static void Main()
     {
         ConfigureServices();
@@ -57,27 +65,7 @@ public static class Menu
         switch (selection)
         {
             case "Crear Producto":
-                Console.WriteLine("Escribe el nombre del producto que quiera añadir: ");
-                string name = Console.ReadLine();
-                Console.WriteLine("Escribe el precio del producto que quiera añadir: ");
-                string price = Console.ReadLine();
-                Console.WriteLine("Escribe el tipo del producto que quiera añadir: ");
-                string type = Console.ReadLine();
-                Console.WriteLine("Escribe la cantidad del producto que quiera añadir: ");
-                string quantity = Console.ReadLine();
-                decimal nprice;
-                int nquantity;
-                List<Movement> listMovs = new List<Movement>();
-
-                if (decimal.TryParse(price, out nprice) && int.TryParse(quantity, out nquantity))
-                {
-                    productService.CreateProduct(name, nprice, type, nquantity, listMovs);
-                    Console.WriteLine($"Producto '{name}' creado exitosamente.");
-                }
-                else
-                {
-                    Console.WriteLine("Entrada no válida para precio o cantidad.");
-                }
+                CreateProduct();
                 break;
 
             case "Añadir Producto":
@@ -94,7 +82,7 @@ public static class Menu
                 break;
 
             case "Mostrar todos los productos":
-                Console.WriteLine("5");
+                ShowAllProducts();
                 break;
 
             default:
@@ -102,67 +90,178 @@ public static class Menu
                 break;
         }
     }
+
+    public static void CreateProduct()
+    {
+        try
+        {
+            Console.WriteLine("Escribe el nombre del producto que quiera añadir: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Escribe el precio del producto que quiera añadir: ");
+            string price = Console.ReadLine();
+            Console.WriteLine("Escribe el tipo del producto que quiera añadir: ");
+            string type = Console.ReadLine();
+            Console.WriteLine("Escribe la cantidad del producto que quiera añadir: ");
+            string quantity = Console.ReadLine();
+            decimal nprice;
+            int nquantity;
+            List<Movement> listMovs = new List<Movement>();
+
+            if (decimal.TryParse(price, out nprice) && int.TryParse(quantity, out nquantity))
+            {
+                productService.CreateProduct(name, nprice, type, nquantity, listMovs);
+                Console.WriteLine($"Producto '{name}' creado exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("Entrada no válida para precio o cantidad.");
+            }
+        }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
+
+    }
     private static void AddOrRemoveProduct(string action)
     {
-        Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
-        string productName = Console.ReadLine();
-
-        var product = productService.GetProduct(productName);
-
-        if (product != null)
+        try
         {
-            if (action == "añadir")
+            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
+            string productName = Console.ReadLine();
+
+            var product = productService.GetProduct(productName);
+
+            if (product != null)
             {
-                Console.WriteLine("Escribe la cantidad que quiera añadir al producto: ");
-                string quantityInput = Console.ReadLine();
+                if (action == "añadir")
+                {
+                    Console.WriteLine("Escribe la cantidad que quiera añadir al producto: ");
+                    string quantityInput = Console.ReadLine();
 
-                if (int.TryParse(quantityInput, out int quantity))
-                {
-                    product.addProd("Entrada adicional", quantity, DateTime.Now);
+                    if (int.TryParse(quantityInput, out int quantity))
+                    {
+                        product.addProd("Entrada adicional", quantity, DateTime.Now);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cantidad no válida.");
+                        return;
+                    }
                 }
-                else
+                else if (action == "borrar")
                 {
-                    Console.WriteLine("Cantidad no válida.");
-                    return;
+                    Console.WriteLine("Escribe la cantidad que quiera quitar al producto: ");
+                    string quantityInput = Console.ReadLine();
+
+                    if (int.TryParse(quantityInput, out int quantity))
+                    {
+                        product.removeProd("Productos Restados", quantity, DateTime.Now);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cantidad no válida.");
+                        return;
+                    }
                 }
+
+
+                UpdateAndSaveProduct(product);
+
+                Console.WriteLine($"Se {action}on al producto {productName}.");
             }
-            else if (action == "borrar")
+            else
             {
-                Console.WriteLine("Escribe la cantidad que quiera quitar al producto: ");
-                string quantityInput = Console.ReadLine();
-
-                if (int.TryParse(quantityInput, out int quantity))
-                {
-                    product.removeProd("Productos Restados", quantity, DateTime.Now);
-                }
-                else
-                {
-                    Console.WriteLine("Cantidad no válida.");
-                    return;
-                }
+                Console.WriteLine($"No se encontró el producto con el nombre {productName}.");
             }
-
-
-            UpdateAndSaveProduct(product);
-
-            Console.WriteLine($"Se {action}on al producto {productName}.");
         }
-        else
+        catch (Exception exception)
         {
-            Console.WriteLine($"No se encontró el producto con el nombre {productName}.");
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
         }
+
     }
     public static void GetProduct()
     {
-        Console.WriteLine($"Escribe el nombre del producto que quiera buscar: ");
-        string productName = Console.ReadLine();
-         var product = productService.GetProduct(productName);
-        Console.WriteLine(product.ToString());
+        try
+        {
+            Console.WriteLine($"Escribe el nombre del producto que quiera buscar: ");
+            string productName = Console.ReadLine();
+            var product = productService.GetProduct(productName);
+            var productString = product.ToString();
+            var table = new Table();
+            table.AddColumn(new TableColumn("Nombre").Centered());
+            table.AddColumn(new TableColumn("Tipo").Centered());
+            table.AddColumn(new TableColumn("Precio").Centered());
+            table.AddColumn(new TableColumn("Cantidad").Centered());
+            string[] splits = productString.Split(',');
+
+            productName = splits[0];
+            productType = splits[1];
+            productPrice = splits[2];
+            ProductQuantity = splits[3];
+
+            table.AddRow(productName, productType, productPrice, ProductQuantity);
+            AnsiConsole.Write(table);
+        }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
 
     }
     private static void UpdateAndSaveProduct(Product product)
     {
         productService.UpdateProduct(product);
         productService.SaveChanges();
+    }
+
+    private static void ShowAllProducts()
+    {
+        try
+        {
+            var table = new Table();
+            var product = productService.GetAllProducts();
+
+
+            table.AddColumn(new TableColumn("Nombre").Centered());
+            table.AddColumn(new TableColumn("Tipo").Centered());
+            table.AddColumn(new TableColumn("Precio").Centered());
+            table.AddColumn(new TableColumn("Cantidad").Centered());
+            foreach (var item in product)
+            {
+
+                var productString = item.ToString();
+                string[] splits = productString.Split(',');
+
+                productName = splits[0];
+                productType = splits[1];
+                productPrice = splits[2];
+                ProductQuantity = splits[3];
+                table.AddRow(productName, productType, productPrice, ProductQuantity);
+            }
+
+
+            AnsiConsole.Write(table);
+
+        }
+
+
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
     }
 }

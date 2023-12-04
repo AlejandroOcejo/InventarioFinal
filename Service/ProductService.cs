@@ -19,6 +19,11 @@ public class ProductService : IProductService
     {
         return Repository.GetProduct(name);
     }
+
+    public List<Product> GetAllProducts()
+    {
+        return Repository.GetAllProducts();
+    }
     public void UpdateProduct(Product product)
     {
         Repository.UpdateProduct(product);
@@ -30,25 +35,46 @@ public class ProductService : IProductService
     }
     public void AddProduct(string p_name, string p_action, int p_quantity)
     {
-        var product = Repository.GetProduct(p_name);
-        if (product == null)
+        try
         {
-            product.addProd(p_action, p_quantity, DateTime.Now);
-            Repository.UpdateProduct(product);
-            Repository.SaveChanges();
+            var product = Repository.GetProduct(p_name);
+            if (product == null)
+            {
+                product.addProd(p_action, p_quantity, DateTime.Now);
+                Repository.UpdateProduct(product);
+                Repository.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("El producto no se encontró en el repositorio.");
+            }
         }
-        else
+        catch (Exception exception)
         {
-            // Manejar la situación cuando product es null
-            Console.WriteLine("El producto no se encontró en el repositorio.");
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
         }
+
     }
     public void RemoveProduct(string p_name, string p_action, int p_quantity)
     {
-        var product = Repository.GetProduct(p_name);
-        product.removeProd(p_action, p_quantity, DateTime.Now);
-        Repository.UpdateProduct(product);
-        Repository.SaveChanges();
+        try
+        {
+            var product = Repository.GetProduct(p_name);
+            product.removeProd(p_action, p_quantity, DateTime.Now);
+            Repository.UpdateProduct(product);
+            Repository.SaveChanges();
+        }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
+
     }
     public string ProductHistory(string p_name)
     {
@@ -56,4 +82,5 @@ public class ProductService : IProductService
 
         return product.getHistory();
     }
+
 }

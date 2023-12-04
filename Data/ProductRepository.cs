@@ -1,6 +1,7 @@
 ﻿namespace Inventario.Data;
 using Inventario.Models;
 using System.Text.Json;
+using System.Linq;
 public class ProductRepository : IProductRepository
 {
     public Dictionary<string, Product> products = new Dictionary<string, Product>();
@@ -26,35 +27,60 @@ public class ProductRepository : IProductRepository
     {
         return products.TryGetValue(name, out var product) ? product : null;
     }
-
     public void UpdateProduct(Product product)
     {
         products[product.Name] = product;
     }
+    public List<Product> GetAllProducts()
+    {
+        return products.Values.ToList();
+    }
     public void SaveChanges()
     {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(products.Values, options);
-        File.WriteAllText(jsonFile, jsonString);
+        try
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonString = JsonSerializer.Serialize(products.Values, options);
+            File.WriteAllText(jsonFile, jsonString);
+        }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
+
     }
     public void LoadAccounts()
     {
-        if (File.Exists(jsonFile))
+        try
         {
-            string jsonString = File.ReadAllText(jsonFile);
-
-            var options = new JsonSerializerOptions
+            if (File.Exists(jsonFile))
             {
-                PropertyNameCaseInsensitive = true,
-            };
+                string jsonString = File.ReadAllText(jsonFile);
 
-            var f_products = JsonSerializer.Deserialize<IEnumerable<Product>>(jsonString, options);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
 
-            if (f_products != null)
-            {
-                products = f_products.ToDictionary(d_prod => d_prod.Name);
+                var f_products = JsonSerializer.Deserialize<IEnumerable<Product>>(jsonString, options);
+
+                if (f_products != null)
+                {
+                    products = f_products.ToDictionary(d_prod => d_prod.Name);
+                }
             }
         }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
+
     }
 
 }

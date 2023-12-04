@@ -10,5 +10,6 @@ public interface IProductService
     void UpdateProduct(Product product);
     void SaveChanges();
 
+    List<Product> GetAllProducts();
     string ProductHistory(string prodName);
 }

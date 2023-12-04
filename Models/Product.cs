@@ -4,13 +4,13 @@ using System.Dynamic;
 using System.Text;
 public class Product
 {
-public string Name {get; set;}
+    public string Name { get; set; }
 
-public decimal Price {get; set;}
+    public decimal Price { get; set; }
 
-public  string Type  {get;set;}
+    public string Type { get; set; }
 
- public int Quantity
+    public int Quantity
     {
         get
         {
@@ -22,46 +22,51 @@ public  string Type  {get;set;}
 
             return quantity;
         }
-    set{}
+        set { }
     }
 
-public List<Movement> ListMovs {get; set;} = new List<Movement>();
+    public List<Movement> ListMovs { get; set; } = new List<Movement>();
 
-public Movement addProd (string p_action, int p_quantity, DateTime p_date){
-    if (p_quantity <= 0)
+    public Movement addProd(string p_action, int p_quantity, DateTime p_date)
     {
-        throw new ArgumentOutOfRangeException(nameof(p_quantity),"La cantidad tiene que ser positiva");
+        if (p_quantity <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(p_quantity), "La cantidad tiene que ser positiva");
+        }
+        var insert = new Movement(p_action, p_quantity, p_date);
+        ListMovs.Add(insert);
+        return insert;
+
     }
-    var insert= new Movement(p_action,p_quantity,p_date);
-    ListMovs.Add(insert);
-    return insert;
-    
-}
-public Movement removeProd (string p_action, int p_quantity, DateTime p_date){
-    if (p_quantity <= 0)
+    public Movement removeProd(string p_action, int p_quantity, DateTime p_date)
     {
-        throw new ArgumentOutOfRangeException(nameof(p_quantity),"La cantidad tiene que ser positiva");
+        if (p_quantity <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(p_quantity), "La cantidad tiene que ser positiva");
+        }
+        var removal = new Movement(p_action, -p_quantity, p_date);
+        ListMovs.Add(removal);
+        return removal;
+
     }
-    var removal= new Movement(p_action,-p_quantity,p_date);
-    ListMovs.Add(removal);
-    return removal;
-    
-}
-public Product (){}
-public Product(string p_Name, decimal p_Price, string p_Type, int p_Quantity, List<Movement> p_listMovs){
-    Name = p_Name;
-    Price = p_Price;
-    Type = p_Type;
-     Quantity = p_Quantity; 
-    ListMovs = p_listMovs ?? new List<Movement>(); 
-    addProd("Primera entrada",p_Quantity,DateTime.Now);
-}
-public string ToString(){
-    var toString = $"El producto {Name} de Type {Type} con Price {Price} que hay {Quantity}";
-    return toString;
-}
-public string getHistory(){
-    var sample= "sample"; 
-    return sample;
-}
+    public Product() { }
+    public Product(string p_Name, decimal p_Price, string p_Type, int p_Quantity, List<Movement> p_listMovs)
+    {
+        Name = p_Name;
+        Price = p_Price;
+        Type = p_Type;
+        Quantity = p_Quantity;
+        ListMovs = p_listMovs ?? new List<Movement>();
+        addProd("Primera entrada", p_Quantity, DateTime.Now);
+    }
+    public string ToString()
+    {
+        var toString = $"{Name}, {Type}, {Price}, {Quantity}";
+        return toString;
+    }
+    public string getHistory()
+    {
+        var sample = "sample";
+        return sample;
+    }
 }

@@ -46,5 +46,28 @@
         "Date": "2023-11-30T19:53:14.5778365+01:00"
       }
     ]
+  },
+  {
+    "Name": "chancla",
+    "Price": 1,
+    "Type": "1",
+    "Quantity": -1,
+    "ListMovs": [
+      {
+        "Action": "Primera entrada",
+        "Quantity_Mov": 1,
+        "Date": "2023-12-04T20:35:51.2498625+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-12-04T20:36:02.7778891+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-12-04T20:36:20.5620277+01:00"
+      }
+    ]
   }
 ]

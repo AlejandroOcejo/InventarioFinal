@@ -1,0 +1,5 @@
+ERROR: Index was outside the bounds of the array.
+time: 04/12/2023 20:18:28
+function: GetProduct
+file: D:\InventarioFinal\Presentation\Menu.cs
+line: 176
