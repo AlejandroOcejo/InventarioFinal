@@ -1,0 +1,73 @@
+[
+  {
+    "Name": "1",
+    "Price": 1,
+    "Type": "1",
+    "Quantity": 1,
+    "ListMovs": [
+      {
+        "Action": "Primera entrada",
+        "Quantity_Mov": 1,
+        "Date": "2023-11-30T19:22:01.0257177+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 1,
+        "Date": "2023-11-30T19:22:03.8171386+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 1,
+        "Date": "2023-11-30T19:27:12.6980335+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-11-30T19:27:32.3771608+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-11-30T19:28:11.0734011+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 1,
+        "Date": "2023-11-30T19:28:26.1541006+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -2,
+        "Date": "2023-11-30T19:52:56.9385212+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 1,
+        "Date": "2023-11-30T19:53:14.5778365+01:00"
+      }
+    ]
+  },
+  {
+    "Name": "chancla",
+    "Price": 1,
+    "Type": "1",
+    "Quantity": -1,
+    "ListMovs": [
+      {
+        "Action": "Primera entrada",
+        "Quantity_Mov": 1,
+        "Date": "2023-12-04T20:35:51.2498625+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-12-04T20:36:02.7778891+01:00"
+      },
+      {
+        "Action": "Productos Restados",
+        "Quantity_Mov": -1,
+        "Date": "2023-12-04T20:36:20.5620277+01:00"
+      }
+    ]
+  }
+]
