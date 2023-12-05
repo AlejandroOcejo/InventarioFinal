@@ -3,3 +3,8 @@ time: 04/12/2023 20:18:28
 function: GetProduct
 file: D:\InventarioFinal\Presentation\Menu.cs
 line: 176
+ERROR: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+time: 05/12/2023 18:36:07
+function: LoadAccounts
+file: D:\InventarioFinal\Data\ProductRepository.cs
+line: 68
