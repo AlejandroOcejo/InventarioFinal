@@ -54,8 +54,8 @@ public static class Menu
         var selection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("Menú de Opciones")
-                .PageSize(6)
-                .AddChoices(new[] { "Crear Producto", "Añadir Producto", "Borrar Producto", "Buscar por Nombre", "Mostrar todos los productos", "Salir" }));
+                .PageSize(7)
+                .AddChoices(new[] { "Crear Producto", "Añadir Cantidad", "Borrar Cantidad", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Salir" }));
 
         return selection;
     }
@@ -81,6 +81,10 @@ public static class Menu
                 GetProduct();
                 break;
 
+            case "Modificar Precio":
+                UpdateProduct("Modificar Precio");
+                break;
+                
             case "Mostrar todos los productos":
                 ShowAllProducts();
                 break;
@@ -144,7 +148,7 @@ public static class Menu
 
                     if (int.TryParse(quantityInput, out int quantity))
                     {
-                        product.addProd("Entrada adicional", quantity, DateTime.Now);
+                        product.addProd("Entrada adicional", quantity, product.Price, DateTime.Now);
                     }
                     else
                     {
@@ -159,7 +163,7 @@ public static class Menu
 
                     if (int.TryParse(quantityInput, out int quantity))
                     {
-                        product.removeProd("Productos Restados", quantity, DateTime.Now);
+                        product.removeProd("Productos Restados", quantity, product.Price, DateTime.Now);
                     }
                     else
                     {
@@ -263,5 +267,50 @@ public static class Menu
             Console.WriteLine(exception.Message);
             throw;
         }
+    }
+    private static void UpdateProduct(string action)
+    {
+        try
+        {
+            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
+            string productName = Console.ReadLine();
+
+            var product = productService.GetProduct(productName);
+
+            if (product != null)
+            {
+                if (action == "Modificar Precio")
+                {
+                    Console.WriteLine("Escriba el nuevo precio: ");
+                    string priceInput = Console.ReadLine();
+
+                    if (decimal.TryParse(priceInput, out decimal p_price))
+                    {
+                        product.updateProd("Cambio Precio", 0, p_price, DateTime.Now);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cantidad no válida.");
+                        return;
+                    }
+                }
+
+                UpdateAndSaveProduct(product);
+
+                Console.WriteLine($"{action} del producto {productName}.");
+            }
+            else
+            {
+                Console.WriteLine($"No se encontró el producto con el nombre {productName}.");
+            }
+        }
+        catch (Exception exception)
+        {
+            Log error = new Log();
+            error.WriteLog(exception);
+            Console.WriteLine(exception.Message);
+            throw;
+        }
+
     }
 }

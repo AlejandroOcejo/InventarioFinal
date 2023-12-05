@@ -6,7 +6,20 @@ public class Product
 {
     public string Name { get; set; }
 
-    public decimal Price { get; set; }
+      public decimal Price
+    {
+        get
+        {
+            decimal price = 0;
+            foreach (var item in ListMovs)
+            {
+                price = item.Price;
+            }
+
+            return price;
+        }
+        set { }
+    }
 
     public string Type { get; set; }
 
@@ -27,24 +40,35 @@ public class Product
 
     public List<Movement> ListMovs { get; set; } = new List<Movement>();
 
-    public Movement addProd(string p_action, int p_quantity, DateTime p_date)
+    public Movement addProd(string p_action, int p_quantity, decimal p_price, DateTime p_date)
     {
         if (p_quantity <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(p_quantity), "La cantidad tiene que ser positiva");
         }
-        var insert = new Movement(p_action, p_quantity, p_date);
+        var insert = new Movement(p_action, p_quantity, p_price, p_date);
         ListMovs.Add(insert);
         return insert;
 
     }
-    public Movement removeProd(string p_action, int p_quantity, DateTime p_date)
+    public Movement updateProd(string p_action, int p_quantity, decimal p_price, DateTime p_date)
+    {
+        if (p_price <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(p_price), "El precio tiene que ser mayor que 0");
+        }
+        var insert = new Movement(p_action, p_quantity, p_price, p_date);
+        ListMovs.Add(insert);
+        return insert;
+    }
+
+    public Movement removeProd(string p_action, int p_quantity, decimal p_price, DateTime p_date)
     {
         if (p_quantity <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(p_quantity), "La cantidad tiene que ser positiva");
         }
-        var removal = new Movement(p_action, -p_quantity, p_date);
+        var removal = new Movement(p_action, -p_quantity, p_price, p_date);
         ListMovs.Add(removal);
         return removal;
 
@@ -57,7 +81,7 @@ public class Product
         Type = p_Type;
         Quantity = p_Quantity;
         ListMovs = p_listMovs ?? new List<Movement>();
-        addProd("Primera entrada", p_Quantity, DateTime.Now);
+        addProd("Primera entrada", p_Quantity, p_Price, DateTime.Now);
     }
     public string ToString()
     {
