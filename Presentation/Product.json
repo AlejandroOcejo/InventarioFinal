@@ -1,27 +1,49 @@
 [
   {
-    "Name": "sasasas",
-    "Price": 12211,
-    "Type": "dasdsads",
-    "Quantity": 66112768,
+    "Name": "a",
+    "Price": 8790789,
+    "Type": "a",
+    "Quantity": 1,
     "ListMovs": [
       {
         "Action": "Primera entrada",
-        "Quantity_Mov": 666,
-        "Price": 12211,
-        "Date": "2023-12-05T19:12:07.9844093+01:00"
+        "Quantity_Mov": 1,
+        "Price": 1,
+        "Date": "2023-12-06T20:43:19.7749406+01:00"
       },
       {
-        "Action": "Entrada adicional",
-        "Quantity_Mov": 66666666,
-        "Price": 12211,
-        "Date": "2023-12-05T19:12:23.9920393+01:00"
-      },
+        "Action": "Cambio Precio",
+        "Quantity_Mov": 0,
+        "Price": 8790789,
+        "Date": "2023-12-06T23:19:38.045454+01:00"
+      }
+    ]
+  },
+  {
+    "Name": "b",
+    "Price": 1,
+    "Type": "a",
+    "Quantity": 1,
+    "ListMovs": [
       {
-        "Action": "Productos Restados",
-        "Quantity_Mov": -554564,
-        "Price": 12211,
-        "Date": "2023-12-05T19:12:37.5439796+01:00"
+        "Action": "Primera entrada",
+        "Quantity_Mov": 1,
+        "Price": 1,
+        "Date": "2023-12-06T20:43:19.7749406+01:00"
+      }
+    ]
+  },
+  {
+    "Name": "c",
+    "Price": 1,
+    "Type": "a",
+    "Quantity": 1,
+    "ListMovs": [
+      {
+        "Action": "Primera entrada",
+        "Quantity_Mov": 1,
+        "Price": 1,
+        "Date": "2023-12-06T20:43:19.7749406+01:00"
       }
     ]
   }

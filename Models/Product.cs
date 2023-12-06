@@ -6,7 +6,7 @@ public class Product
 {
     public string Name { get; set; }
 
-      public decimal Price
+    public decimal Price
     {
         get
         {
@@ -85,7 +85,7 @@ public class Product
     }
     public string ToString()
     {
-        var toString = $"{Name}, {Type}, {Price}, {Quantity}";
+        var toString = $"{Name}, {Type}, {Price}, {Quantity}, {ListMovs}";
         return toString;
     }
     public string getHistory()
