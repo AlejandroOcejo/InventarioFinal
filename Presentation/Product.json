@@ -1,9 +1,9 @@
 [
   {
     "Name": "a",
-    "Price": 8790789,
+    "Price": 32,
     "Type": "a",
-    "Quantity": 1,
+    "Quantity": 688,
     "ListMovs": [
       {
         "Action": "Primera entrada",
@@ -16,6 +16,18 @@
         "Quantity_Mov": 0,
         "Price": 8790789,
         "Date": "2023-12-06T23:19:38.045454+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 687,
+        "Price": 8790789,
+        "Date": "2023-12-07T15:26:43.0003801+01:00"
+      },
+      {
+        "Action": "Cambio Precio",
+        "Quantity_Mov": 0,
+        "Price": 32,
+        "Date": "2023-12-07T15:27:53.2892467+01:00"
       }
     ]
   },

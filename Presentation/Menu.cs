@@ -58,7 +58,7 @@ public static class Menu
             new SelectionPrompt<string>()
                 .Title("Menú de Opciones")
                 .PageSize(8)
-                .AddChoices(new[] { "Crear Producto", "Añadir Cantidad", "Borrar Cantidad", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Mostrar Lista de movimientos", "Test", "Salir" }));
+                .AddChoices(new[] { "Crear Producto", "Añadir Producto", "Borrar Producto", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Mostrar Lista de movimientos", "Test", "Salir" }));
 
         return selection;
     }
@@ -142,7 +142,7 @@ public static class Menu
     {
         try
         {
-            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
+            Console.WriteLine($"Selecciona el producto al que quiera {action}: ");
             string productName = productChoiceMenu();
 
             var product = productService.GetProduct(productName);
@@ -278,7 +278,7 @@ public static class Menu
     {
         try
         {
-            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
+            Console.WriteLine($"Selecciona el producto al que quiera {action}: ");
             string productName = productChoiceMenu();
 
             var product = productService.GetProduct(productName);
@@ -322,7 +322,7 @@ public static class Menu
 
     private static void ShowMovements()
     {
-        Console.WriteLine($"Escribe el nombre del producto que quiera ver movimientos: ");
+        Console.WriteLine($"Selecciona el producto del que quiera ver movimientos: ");
 
         string productName = productChoiceMenu();
         var product = productService.GetProduct(productName);
