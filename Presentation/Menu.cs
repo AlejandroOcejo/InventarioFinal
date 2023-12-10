@@ -58,7 +58,7 @@ public static class Menu
             new SelectionPrompt<string>()
                 .Title("Menú de Opciones")
                 .PageSize(8)
-                .AddChoices(new[] { "Crear Producto", "Añadir Producto", "Borrar Producto", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Mostrar Lista de movimientos", "Test", "Salir" }));
+                .AddChoices(new[] { "Crear Producto", "Añadir Producto", "Borrar Producto", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Mostrar Lista de movimientos", "Salir" }));
 
         return selection;
     }
@@ -94,9 +94,7 @@ public static class Menu
             case "Mostrar Lista de movimientos":
                 ShowMovements();
                 break;
-            case "Test":
-                productChoiceMenu();
-                break;
+
             default:
                 Console.WriteLine("Opción no válida.");
                 break;

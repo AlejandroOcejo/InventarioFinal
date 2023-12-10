@@ -3,7 +3,7 @@
     "Name": "a",
     "Price": 32,
     "Type": "a",
-    "Quantity": 688,
+    "Quantity": 697,
     "ListMovs": [
       {
         "Action": "Primera entrada",
@@ -28,6 +28,12 @@
         "Quantity_Mov": 0,
         "Price": 32,
         "Date": "2023-12-07T15:27:53.2892467+01:00"
+      },
+      {
+        "Action": "Entrada adicional",
+        "Quantity_Mov": 9,
+        "Price": 32,
+        "Date": "2023-12-09T13:50:31.4439433+01:00"
       }
     ]
   },
@@ -56,6 +62,26 @@
         "Quantity_Mov": 1,
         "Price": 1,
         "Date": "2023-12-06T20:43:19.7749406+01:00"
+      }
+    ]
+  },
+  {
+    "Name": "ui",
+    "Price": 879,
+    "Type": "8",
+    "Quantity": 8,
+    "ListMovs": [
+      {
+        "Action": "Primera entrada",
+        "Quantity_Mov": 8,
+        "Price": 8,
+        "Date": "2023-12-10T16:13:58.0619708+01:00"
+      },
+      {
+        "Action": "Cambio Precio",
+        "Quantity_Mov": 0,
+        "Price": 879,
+        "Date": "2023-12-10T16:14:10.3307258+01:00"
       }
     ]
   }
