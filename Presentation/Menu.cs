@@ -12,15 +12,19 @@ public static class Menu
 {
 
     private static IProductService productService;
-
     private static string productName;
     private static string productType;
-
     private static string productPrice;
-
     private static string ProductQuantity;
 
+    private static string movementAction;
+    private static string movementQuantity;
+    private static string movementPrice;
+    private static string movementDate;
 
+    private static string movementDateDay;
+    private static string movementDateTime;
+    private static List<string> productNameList = new List<string> { };
     public static void Main()
     {
         ConfigureServices();
@@ -44,7 +48,6 @@ public static class Menu
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddTransient<IProductService, ProductService>();
         serviceCollection.AddSingleton<IProductRepository, ProductRepository>();
-
         var serviceProvider = serviceCollection.BuildServiceProvider();
         productService = serviceProvider.GetService<IProductService>();
     }
@@ -54,8 +57,8 @@ public static class Menu
         var selection = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("Menú de Opciones")
-                .PageSize(7)
-                .AddChoices(new[] { "Crear Producto", "Añadir Cantidad", "Borrar Cantidad", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Salir" }));
+                .PageSize(8)
+                .AddChoices(new[] { "Crear Producto", "Añadir Producto", "Borrar Producto", "Buscar por Nombre", "Modificar Precio", "Mostrar todos los productos", "Mostrar Lista de movimientos", "Salir" }));
 
         return selection;
     }
@@ -76,7 +79,6 @@ public static class Menu
                 AddOrRemoveProduct("borrar");
                 break;
 
-
             case "Buscar por Nombre":
                 GetProduct();
                 break;
@@ -84,9 +86,13 @@ public static class Menu
             case "Modificar Precio":
                 UpdateProduct("Modificar Precio");
                 break;
-                
+
             case "Mostrar todos los productos":
                 ShowAllProducts();
+                break;
+
+            case "Mostrar Lista de movimientos":
+                ShowMovements();
                 break;
 
             default:
@@ -134,8 +140,8 @@ public static class Menu
     {
         try
         {
-            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
-            string productName = Console.ReadLine();
+            Console.WriteLine($"Selecciona el producto al que quiera {action}: ");
+            string productName = productChoiceMenu();
 
             var product = productService.GetProduct(productName);
 
@@ -195,8 +201,7 @@ public static class Menu
     {
         try
         {
-            Console.WriteLine($"Escribe el nombre del producto que quiera buscar: ");
-            string productName = Console.ReadLine();
+            string productName = productChoiceMenu();
             var product = productService.GetProduct(productName);
             var productString = product.ToString();
             var table = new Table();
@@ -243,7 +248,6 @@ public static class Menu
             table.AddColumn(new TableColumn("Cantidad").Centered());
             foreach (var item in product)
             {
-
                 var productString = item.ToString();
                 string[] splits = productString.Split(',');
 
@@ -272,8 +276,8 @@ public static class Menu
     {
         try
         {
-            Console.WriteLine($"Escribe el nombre del producto al que quiera {action}: ");
-            string productName = Console.ReadLine();
+            Console.WriteLine($"Selecciona el producto al que quiera {action}: ");
+            string productName = productChoiceMenu();
 
             var product = productService.GetProduct(productName);
 
@@ -312,5 +316,62 @@ public static class Menu
             throw;
         }
 
+    }
+
+    private static void ShowMovements()
+    {
+        Console.WriteLine($"Selecciona el producto del que quiera ver movimientos: ");
+
+        string productName = productChoiceMenu();
+        var product = productService.GetProduct(productName);
+
+        var table = new Table();
+        table.AddColumn(new TableColumn("Acción").Centered());
+        table.AddColumn(new TableColumn("Cantidad").Centered());
+        table.AddColumn(new TableColumn("Precio").Centered());
+        table.AddColumn(new TableColumn("Fecha").Centered());
+        table.AddColumn(new TableColumn("Hora").Centered());
+
+        foreach (var movement in product.ListMovs)
+        {
+            var productString = movement.ToString();
+            string[] splits = productString.Split(',');
+
+            movementAction = splits[0];
+            movementQuantity = splits[1];
+            movementPrice = splits[2];
+            movementDate = splits[3];
+
+            string[] timeSplit = movementDate.Split(' ');
+            movementDateDay = timeSplit[1];
+            movementDateTime = timeSplit[2];
+
+            table.AddRow(movementAction, movementQuantity, movementPrice, movementDateDay, movementDateTime);
+
+        }
+        AnsiConsole.Write(table);
+    }
+
+
+    private static string productChoiceMenu()
+    {
+        productNameList = new List<string>();
+        var products = productService.GetAllProducts();
+        foreach (var item in products)
+        {
+            var productString = item.ToString();
+            string[] splits = productString.Split(',');
+            productName = splits[0];
+            productNameList.Add(productName);
+
+        }
+        var test = productNameList.Count;
+        var selection = AnsiConsole.Prompt(
+
+            new SelectionPrompt<string>()
+                .Title("Lista de productos")
+                .PageSize(Math.Max(productNameList.Count, 3))
+                .AddChoices(productNameList.ToArray()));
+        return selection;
     }
 }

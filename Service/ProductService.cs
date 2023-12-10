@@ -58,7 +58,7 @@ public class ProductService : IProductService
         }
 
     }
-     public void UpdateProduct(string p_name, string p_action, decimal p_Price, int p_quantity)
+    public void UpdateProduct(string p_name, string p_action, decimal p_Price, int p_quantity)
     {
         try
         {
